@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messaging</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <!-- Your custom styles -->
+    <style>
+      .text-right {
+        text-align: right;
+      }
+      body {
+        background-color: #302f3f;
+        margin: 0;
+      }
+
+      .container {
+        background-color: #f4f4f3;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+      }
+
+      h2 {
+        color: #e2442f;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        border-color: #d9a769;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: #f4f4f3;
+        color: #302f3f;
+      }
+
+      .btn-primary {
+        background-color: #d9a769;
+        border-color: #d9a769;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .recent-chats {
+        flex: 1; /* Fill remaining vertical space */
+        background-color: #f4f4f3;
+        padding: 15px;
+        overflow-y: auto; /* Add scrollbars for long chats */
+      }
+
+      .chat-div {
+        border-right: 1px solid black;
+        padding-left: 20px;
+      }
+
+      .chat-messages {
+        width: 100%; /* Take the full width */
+        padding: 15px;
+      }
+
+      .chat {
+        background-color: #f4f4f3;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer; /* Add a pointer cursor to indicate chat selection */
+      }
+
+      .chat.active {
+        background-color: #d9a769; /* Change the background color for selected chat */
+      }
+
+      /* Message Input Section */
+      .message-input {
+        display: flex;
+        width: 100%;
+      }
+
+      .message-input textarea {
+        flex-grow: 2;
+        border-color: #d9a769;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: #f4f4f3;
+        color: #302f3f;
+        resize: none;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+
+      /* Border between sections */
+      .border {
+        border-bottom: 1px solid #d9a769;
+        margin-bottom: 15px;
+      }
+
+      /* Button to open the chat search bar */
+      #openChatSearch {
+        background-color: #d9a769;
+        border-color: #d9a769;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+
+      /* Chat search bar (initially hidden) */
+      .chat-search-bar {
+        display: none;
+        margin-bottom: 15px;
+      }
+      .body {
+        background-color: #ededed;
+        margin-left: 280px;
+        margin-top: 10px;
+      }
+      .add_chat {
+        margin-top: 10px;
+        width: 100%;
+      }
+      .send_message {
+        margin-top: 300px;
+      }
+      .user_click {
+        border: none !important;
+        background-color: #d9a769;
+        width: 100%;
+        border-radius: 12px;
+      }
+      .btn-primary2 {
+            background-color: #D9A769;
+            border-color: #D9A769;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            padding: 5px 10px; /* Adjust padding for button size */
+            margin: 10px; /* Add margin for spacing between buttons */
+        }
+        /* a {
+            text-decoration: none;
+            color: #302F3F;
+            background-color: #D9A769;
+            border: 1px solid #D9A769;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 10px 20px; 
+            margin: 10px; 
+            transition: background-color 0.3s ease; 
+            width: 200px;
+        } */
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container body">
+      
+      <!-- <div class="chat-container"> -->
+      <!-- Button to open the chat search bar -->
+
+      <!-- Recent Chats Section -->
+      <div class="row">
+        
+        <div class="recent-chats col-3 chat-div">
+          <a href="/user">
+              <button class="btn-primary2">Back</button>
+          </a>
+          <a href="/newchat">
+            <button class="btn btn-primary btn-block add_chat">Add New Chat</button>
+          </a>
+          <h4>Recent Chats</h4>
+          {% for chat in recent_chats %}
+          <!-- <div class="chat {% if loop.first %}active{% endif %}"> -->
+          <div>  
+            <form method="POST" action="/chats/{{ chat.sender_id }}">
+              <button class="user_click" type="submit" style="margin-top: 10px;">{{ chat.username }}</button>
+            </form>
+          </div>
+          {% endfor %}
+          <!-- Add more chat entries as needed -->
+        </div>
+
+        <div class="col-9">
+          <div class="recent-chats">
+            <h1>Messages</h1>
+            <ul style="list-style: none;">
+              {% for message in messages %}
+              {% if message.content %}
+              <li class="{% if message.sender_id == uid %}text-right{% endif %}">
+                {{ message.content }} <br><small><i>{{ message.date}}</i></small> 
+                <!-- {% for base64_image_data in binary_data_list %}
+              
+                 <img src="data:image/png;base64,{{ base64_image_data }}" alt="Image Description">
+                 {% endfor %} -->
+                
+              </li>
+              {% endif %}
+              {% endfor %}
+              <hr>
+              <b>Encrypted Images:</b>
+              {% for base64_image_data in binary_data_list %}
+              <li class="{% if base64_image_data.sender_id == uid %}text-right{% endif %}">
+                <img src="data:image/png;base64,{{ base64_image_data.img }}" width="200px" alt="Image Description">
+                <br>
+                <small><i>{{ base64_image_data.date}}</i></small> 
+               
+              </li>
+               {% endfor %}
+            </ul>
+          </div>
+          <div class="send_message">
+            <div>
+              <a class="btn btn-primary" href="/encrypt">Encrypt</a>
+              <a class="btn btn-primary" href="/decrypt">Decrypt</a>
+            </div>
+            <div class="message-input">
+              <form method="POST" action="/sendmessage/{{sender_id}}" style="width: 100%; margin-right: 10px;">
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-control"
+                  placeholder="Type your message"
+                  required
+                ></textarea>
+                <button id="sendMessage" type="submit" class="btn btn-primary">
+                  Send
+                </button>
+              </form>
+              
+            </div>
+
+            <!-- Chat search bar (initially hidden) -->
+            <div class="chat-search-bar">
+              <input
+                type="text"
+                id="searchUser"
+                class="form-control"
+                placeholder="Search user by email"
+              />
+              <!-- Add search functionality with JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <!-- ... (previous script content) ... -->
+
+    <!-- Your custom JavaScript for handling chat functionality -->
+    <script>
+      // Add your JavaScript code here to handle chat functionality
+      // You may need to make AJAX requests to the server to load chats and send messages.
+
+      // JavaScript for selecting and highlighting chats
+      const chats = document.querySelectorAll(".chat");
+
+      chats.forEach((chat) => {
+        chat.addEventListener("click", () => {
+          chats.forEach((c) => {
+            c.classList.remove("active");
+          });
+          chat.classList.add("active");
+        });
+      });
+
+      // JavaScript to toggle the chat search bar
+      const openChatSearchButton = document.getElementById("openChatSearch");
+      const chatSearchBar = document.querySelector(".chat-search-bar");
+
+      openChatSearchButton.addEventListener("click", () => {
+        chatSearchBar.style.display = "block"; // Show the search bar
+      });
+    </script>
+  </body>
+</html>

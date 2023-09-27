@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hide Text in Image</title>
+    <!-- <style>
+        body {
+            background-color: #302f3f;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 10px;
+            max-width: 800px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        } */
+
+        h1 {
+            color: #333;
+        }
+       
+        h2 {
+            color: #e2442f;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #message-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        #original-image,
+        #encrypted-image {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+        #image-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-color: #d9a769;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #f4f4f3;
+            color: #302f3f;
+        }
+    </style> -->
+    <style>
+        body {
+            background-color: #302f3f;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #F4F4F3;
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 10px;
+            max-width: 800px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #e2442f;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+       
+        h2 {
+            color: #e2442f;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #message-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        #original-image,
+        #encrypted-image {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+        #image-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-color: #d9a769;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #f4f4f3;
+            color: #302f3f;
+        }
+        .btn-primary {
+            background-color: #D9A769;
+            border-color: #D9A769;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 15px 30px; /* Adjust padding for button size */
+            margin: 10px; /* Add margin for spacing between buttons */
+        }
+        .btn-primary2 {
+            background-color: #D9A769;
+            border-color: #D9A769;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            padding: 5px 10px; /* Adjust padding for button size */
+            margin: 10px; /* Add margin for spacing between buttons */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/user">
+            <button class="btn-primary2">Back</button>
+        </a>
+        <h1 align="center">Stegano Message Decryption</h1>
+        <form id="message-form" enctype="multipart/form-data" action="/decrypt" method="POST">
+            <label for="image"><b>Upload Encrypted Image:</b></label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <br>
+            <button type="submit" id="hide-info-button" class="btn-primary">Decode</button>
+        </form>
+
+        <div id="image-container">
+            <div>
+                <h2>Secret Message:</h2>
+                <body>{{message}}</body>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script>
+        const imageInput = document.getElementById('image');
+        const originalImage = document.getElementById('original-image');
+        const encryptedImage = document.getElementById('encrypted-image');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        const hiddenTextInput = document.getElementById('hidden-text');
+        const hideInfoButton = document.getElementById('hide-info-button');
+
+        hideInfoButton.addEventListener('click', async () => {
+            const formData = new FormData();
+            formData.append('email', emailInput.value);
+            formData.append('message', messageInput.value);
+            formData.append('hidden-text', hiddenTextInput.value);
+            formData.append('image', imageInput.files[0]);
+
+            try {
+                const response = await fetch('/encrypt', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const encryptedImagePath = await response.text();
+                    encryptedImage.src = encryptedImagePath;
+                } else {
+                    console.error('Failed to fetch encrypted image.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        imageInput.addEventListener('change', (event) => {
+            // Handle image input change (if needed)
+        });
+    </script> -->
+</body>
+</html>

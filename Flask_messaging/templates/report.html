@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <!-- Include your CSS stylesheets and Bootstrap here -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <style>
+      /* Your custom CSS styles with the provided color scheme go here */
+      body {
+        background-color: #302f3f;
+        color: #f4f4f3;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 40px;
+        color: #e2442f;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+      h5 {
+        font-size: 20px;
+        color: #e2442f;
+      }
+
+      .container {
+        background-color: #302f3f;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .list-group-item {
+        background-color: #887b94;
+        color: #f4f4f3;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .list-group-item a {
+        background-color: #e2442f;
+        color: #f4f4f3;
+        border: none;
+        text-decoration: none;
+      }
+
+      .list-group-item a:hover {
+        background-color: #d9a769;
+      }
+      .btn-primary {
+        background-color: #d9a769;
+        border-color: #d9a769;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .user_click {
+        border: none !important;
+        background-color: #d9a769;
+        width: auto;
+        border-radius: 12px;
+      }
+      .btn-primary2 {
+            background-color: #D9A769;
+            border-color: #D9A769;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            padding: 5px 10px; /* Adjust padding for button size */
+            margin: 10px; /* Add margin for spacing between buttons */
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="/user">
+        <button class="btn-primary2">Back</button>
+    </a>
+      <h1>User List</h1>
+        {% for user in users %}
+        <div class="chat {% if loop.first %}active{% endif %}">
+          <form method="POST" action="/report/{{ user.id }}">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><h5>UserName</h5></th>
+                        <th><h5>Description</h5></th>
+                        <th><h5>Action</h5></th>
+                    </tr>
+                </thead>
+                <tbody id="reportTable">
+                    <tr>
+                        <th>{{ user.username }}</th>
+                        <th><textarea name="Description" id="Description" cols="30" rows="2"></textarea></th>
+                        <th> <button class="user_click" type="submit">Report</button></th>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+          </form>
+        </div>
+        {% endfor %}
+
+    </div>
+  </body>
+</html>
